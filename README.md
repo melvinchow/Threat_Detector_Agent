@@ -5,7 +5,7 @@ that assesses physical and reputational threats to a high-profile individual (a
 "VIP" / protectee) based on their travel plans, internet activity, public-records
 footprint, and exposure of their personal data.
 
-This implements the design proposed in the **Module 1–5 capstone checkpoints**:
+This implements the design proposed in the **capstone checkpoints**:
 the agent roster and Think → Act → Observe → Adapt loop (M2), the RAG layer
 (M3), the Tree-of-Thought protection planner (M4), the multi-agent coordination
 rules (M5) — and an **analyst GUI** (`python app.py`) with live panels for
@@ -40,7 +40,7 @@ tidiness — it is a safety argument:
 | **Public Records** | green | court dockets, incident/CAD logs, protest permits | Forward-looking signal (permits filed for *future* dates). |
 | **Exposure** | green | data-broker scan, breach lookup, dark-web, doxxing | **The only agent that holds the VIP's PII.** No other agent can read from it. |
 | **Geospatial** | green | geocoding, distance/routing, proximity | Exists *because an LLM cannot do arithmetic on coordinates* — a real computation limitation. |
-| **Case Memory / Retrieval** | teal | RAG pipeline (pre-filter → hybrid → rerank) + SQLite facts store | The RAG layer (Module 3): surfaces indexed historical/oblique signal a live scrape can't, scoped hard to the protectee. |
+| **Case Memory / Retrieval** | teal | RAG pipeline (pre-filter → hybrid → rerank) + SQLite facts store | The RAG layer: surfaces indexed historical/oblique signal a live scrape can't, scoped hard to the protectee. |
 | **Risk Assessment** | purple | scoring rubric, calculator, source-reliability lookup | Has **no retrieval tools at all.** It can only score what was actually returned — this is what structurally prevents hallucinated threats. |
 | **Recommendation** | red | playbooks, budget constraints, **the nested ToT beam planner** | Proposes actions; **never executes.** A human approves first. The system's one exploratory loop lives here — and nowhere else. |
 
@@ -112,7 +112,7 @@ production systems handle test doubles, and it is a good thing to write up.)
 
 The system keeps its own indexed memory and retrieves from it — filtering the
 daily ingest down to what matters, and catching threats phrased with no threat
-words. The design is written up in [`docs/module3_rag_design.md`](docs/module3_rag_design.md);
+words. The design is written up in [`docs/rag_design.md`](docs/rag_design.md);
 in one paragraph:
 
 - **Hybrid store.** Unstructured text goes in a vector index; structured facts
@@ -154,7 +154,7 @@ criteria (discretion, proximity, reviews, brand preference weighted low with a
 repeat-brand predictability penalty) *rank* what survives. The search is
 read-only — nothing is booked until the analyst approves — and it returns a
 **slate** of complete plans, not a single answer. Design write-up:
-[`docs/module4_tot_design.md`](docs/module4_tot_design.md).
+[`docs/tot_design.md`](docs/tot_design.md).
 
 ## Coordination Rules
 
@@ -167,7 +167,7 @@ high-severity claims back for corroboration (cap 2 rounds), then reports them
 with severity capped rather than dropping them; the ToT beam terminates by
 construction. Protocols are chosen **per edge** (one-way returns, two-way
 corroboration, a conditional analyst edge, brainstorm only inside the beam).
-Write-up: [`docs/module5_architecture.md`](docs/module5_architecture.md).
+Write-up: [`docs/architecture.md`](docs/architecture.md).
 
 ## Guardrails & Evaluation
 
@@ -190,7 +190,7 @@ search, PII isolation, bounded loops) are joined by the Module 6 layer
   rate, seeded retrieval recall, fallback success. Guardrails constrain;
   metrics say whether they're calibrated.
 
-Write-up: [`docs/module6_guardrails.md`](docs/module6_guardrails.md).
+Write-up: [`docs/guardrails.md`](docs/guardrails.md).
 
 ## The analyst GUI
 
@@ -311,7 +311,7 @@ real integration rather than a diagram:
   inside the tool, so no framework can route it through a prompt.
 
 `claude_harness.py` (`llm.harness: claude`) remains as the Claude Agent SDK
-adapter discussed in the module writeups.
+adapter discussed in the writeups.
 
 ## The chat (`conversation.py`)
 
