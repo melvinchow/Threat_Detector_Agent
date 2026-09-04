@@ -1,0 +1,2 @@
+[console_scripts]
+threat-detector = threat_detector.cli:main
