@@ -31,7 +31,7 @@ guardrails:
 
 llm:
   # false -> deterministic mode: plain-Python loop, no model, no cost, fully
-  #          reproducible (the gradable baseline).
+  #          reproducible
   # true  -> LLM-DRIVEN mode: a real agent loop (agent_loop.py) — the model
   #          decides which specialist to dispatch, reacts to what comes back,
   #          and writes the assessment narrative. Tools, guardrails, and the

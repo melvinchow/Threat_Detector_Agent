@@ -27,7 +27,7 @@ the system:
 3. Produces a **threat briefing**: a numeric risk score, the evidence behind it,
    and recommended next actions — with every action gated behind analyst approval.
 
-## The architecture (from the Module 2 checkpoint)
+## The architecture
 
 The system is deliberately split into one **orchestrator** plus several
 **specialist agents**, each owning a small, coherent set of tools. This is not
