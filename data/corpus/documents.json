@@ -1,0 +1,126 @@
+{
+  "_comment": "Synthetic RAG corpus for the Berlin scenario. Two indexes are mixed via the 'index' field: 'live' = daily ingest (ages out), 'case' = curated memory (never expires). Notable didactic documents: (forum:redwing) a 14-month-old CASE-memory surveillance post by @drk_wolf with NO threat words, which grounds the 'with-retrieval' assessment; (social:handle-probe) a recent post whose only strong signal is the exact handle @drk_wolf, which LEXICAL search catches but the concept embedder blurs; (social:wrong-vale) a violent post about a DIFFERENT executive (morgan_vale) that the entity_id pre-filter must exclude; (exposure:broker-hit) a PII-class doc the public retrieval path must not see.",
+  "documents": [
+    {
+      "doc_id": "news-techwire-automation",
+      "source_type": "news",
+      "source_id": "news:techwire",
+      "index": "live",
+      "entity_ids": ["jordan_vale"],
+      "authored_at": "2026-08-10",
+      "reliability": 0.75,
+      "title": "Vantage Robotics faces backlash over factory automation plans",
+      "text": "Vantage Robotics drew sharp criticism this week after its chief executive, Jordan Vale, announced a sweeping warehouse automation program.\n\nUnions say the rollout will cut hundreds of jobs across three facilities. Organizers have promised to bring their objections to Vale's upcoming public appearances in Europe.\n\nThe company defended the plan as necessary for competitiveness, but the announcement has fueled a wave of negative coverage and online anger directed at the CEO personally.",
+      "meta": {"sentiment": "negative"}
+    },
+    {
+      "doc_id": "news-citypaper-europe-tour",
+      "source_type": "news",
+      "source_id": "news:citypaper",
+      "index": "live",
+      "entity_ids": ["open_sky_collective"],
+      "authored_at": "2026-08-08",
+      "reliability": 0.7,
+      "title": "Open Sky Collective plans European tour of demonstrations",
+      "text": "The activist group Open Sky Collective announced a series of demonstrations across Europe targeting robotics and surveillance firms, beginning in Berlin.",
+      "meta": {"sentiment": "negative"}
+    },
+    {
+      "doc_id": "reddit-robotics-keynote",
+      "source_type": "social",
+      "source_id": "reddit:r/robotics",
+      "index": "live",
+      "entity_ids": ["jordan_vale"],
+      "authored_at": "2026-08-12",
+      "reliability": 0.6,
+      "title": "Vantage CEO Jordan Vale keynoting the Berlin robotics conference",
+      "text": "Anyone else going? Vale from Vantage is the headline keynote at the Berlin conference. Lots of angry comments about the automation announcement.",
+      "meta": {"subreddit": "robotics", "author": "r_user_1"}
+    },
+    {
+      "doc_id": "reddit-activism-mobilize",
+      "source_type": "social",
+      "source_id": "reddit:r/activism",
+      "index": "live",
+      "entity_ids": ["open_sky_collective"],
+      "authored_at": "2026-08-11",
+      "reliability": 0.55,
+      "title": "Open Sky Collective mobilizing for the Berlin conference",
+      "text": "Open Sky Collective is organizing a demonstration outside the Berlin conference venue. Bring signs.",
+      "meta": {"subreddit": "activism", "author": "r_user_2"}
+    },
+    {
+      "doc_id": "reddit-rumors-itinerary",
+      "source_type": "social",
+      "source_id": "reddit:r/rumors",
+      "index": "live",
+      "entity_ids": ["jordan_vale"],
+      "authored_at": "2026-08-13",
+      "reliability": 0.2,
+      "title": "Heard Jordan Vale's whole schedule got leaked??",
+      "text": "unconfirmed but someone said the CEO's full Berlin itinerary is floating around. probably fake.",
+      "meta": {"subreddit": "rumors", "author": "r_user_3"}
+    },
+    {
+      "doc_id": "forum-redwing-munich",
+      "source_type": "social",
+      "source_id": "forum:redwing",
+      "index": "case",
+      "entity_ids": ["jordan_vale", "open_sky_collective"],
+      "authored_at": "2025-06-05",
+      "reliability": 0.7,
+      "title": "post by @drk_wolf",
+      "text": "Was at the Munich keynote last year. Hung around outside the Kongresszentrum for a couple hours after it ended. You learn a lot about someone's routine that way, which door the detail uses, which garage the car comes out of, what time he actually leaves versus what the schedule says. Vale never once looked up.",
+      "meta": {"author": "@drk_wolf", "platform": "forum", "confirmed_relevant": true}
+    },
+    {
+      "doc_id": "social-handle-probe",
+      "source_type": "social",
+      "source_id": "social:handle-probe",
+      "index": "live",
+      "entity_ids": ["jordan_vale", "open_sky_collective"],
+      "authored_at": "2026-08-13",
+      "reliability": 0.5,
+      "title": "post by @drk_wolf",
+      "text": "@drk_wolf asking around again about the Berlin venue floor plan and the delegate entrances.",
+      "meta": {"author": "@drk_wolf", "platform": "forum"}
+    },
+    {
+      "doc_id": "social-wrong-vale",
+      "source_type": "social",
+      "source_id": "social:someforum",
+      "index": "live",
+      "entity_ids": ["morgan_vale"],
+      "authored_at": "2026-08-09",
+      "reliability": 0.4,
+      "title": "post about Morgan Vale",
+      "text": "Morgan Vale deserves whatever is coming. Someone should attack that CEO at the shareholder meeting and make them pay.",
+      "meta": {"note": "different person, same surname — decoy for entity-id scoping"}
+    },
+    {
+      "doc_id": "incident-munich-2025",
+      "source_type": "incident_log",
+      "source_id": "incident:munich-2025",
+      "index": "case",
+      "entity_ids": ["jordan_vale", "open_sky_collective"],
+      "authored_at": "2025-06-10",
+      "reliability": 0.85,
+      "title": "After-action note — Munich keynote 2025",
+      "text": "During the 2025 Munich keynote, protective detail flagged a small group affiliated with Open Sky Collective gathered near the venue's delegate entrance.\n\nOne individual, later associated with the handle drk_wolf, remained outside the Kongresszentrum for roughly two hours after the event concluded and was observed noting the movements of vehicles at the parking exit.\n\nNo contact was attempted and no offence was committed, so the matter was logged for pattern awareness rather than escalated. The note was retained in case the same individual resurfaced at a future appearance.",
+      "meta": {"classification": "internal"}
+    },
+    {
+      "doc_id": "exposure-broker-hit",
+      "source_type": "data_broker",
+      "source_id": "broker:peoplefinder",
+      "index": "live",
+      "entity_ids": ["jordan_vale"],
+      "authored_at": "2026-08-13",
+      "access_class": "pii",
+      "reliability": 0.8,
+      "title": "Data-broker listing (PII)",
+      "text": "A people-finder listing exposes a home address and two phone numbers associated with the protectee. PII-class: only the Exposure agent may retrieve this.",
+      "meta": {"broker": "peoplefinder"}
+    }
+  ]
+}

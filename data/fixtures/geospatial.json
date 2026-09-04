@@ -1,0 +1,16 @@
+{
+  "_comment": "Pre-geocoded places for synthetic mode. Berlin (the venue) and Alexanderplatz (the permitted protest site) are ~0.9 km apart, so the proximity tool produces a high-severity finding. The two Saint Petersburgs demonstrate the same-name-city ambiguity the geospatial agent resolves via country.",
+  "places": [
+    { "name": "Berlin", "lat": 52.5200, "lon": 13.4050, "country": "Germany" },
+    { "name": "Alexanderplatz, Berlin", "lat": 52.5219, "lon": 13.4132, "country": "Germany" },
+    { "name": "Messe Berlin", "lat": 52.5049, "lon": 13.2733, "country": "Germany" },
+    { "name": "Saint Petersburg, Russia", "lat": 59.9311, "lon": 30.3609, "country": "Russia" },
+    { "name": "Saint Petersburg, Florida", "lat": 27.7676, "lon": -82.6403, "country": "United States" }
+  ],
+  "safe_havens": {
+    "berlin": [
+      { "kind": "hospital", "name": "Charité – Universitätsmedizin", "distance_km": 2.1 },
+      { "kind": "police station", "name": "Polizei Berlin Direktion 3", "distance_km": 1.4 }
+    ]
+  }
+}

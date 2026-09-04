@@ -1,0 +1,35 @@
+{
+  "_comment": "Synthetic public records for the Berlin scenario. The protest permit is the forward-looking signal: it is filed for a future date near the venue and it NAMES the group, which is what triggers the orchestrator's targeted second wave and the exposure escalation.",
+  "protest_permits": [
+    {
+      "source_id": "permit:berlin-ordnungsamt",
+      "city": "Berlin",
+      "group": "Open Sky Collective",
+      "location": "Alexanderplatz, Berlin",
+      "date": "2026-08-29",
+      "expected_size": 400,
+      "severity": 0.45
+    }
+  ],
+  "incidents": [
+    {
+      "source_id": "cad:berlin-police",
+      "city": "Berlin",
+      "group": "Open Sky Collective",
+      "summary": "Two incidents of trespass at a robotics trade show linked to Open Sky Collective in the last 60 days.",
+      "location": "Messe Berlin",
+      "date": "2026-07-14",
+      "severity": 0.4
+    }
+  ],
+  "court_dockets": [
+    {
+      "source_id": "docket:sf-superior",
+      "parties": "Warehouse Workers United v. Vantage Robotics",
+      "summary": "Labor dispute naming Vantage Robotics and CEO Jordan Vale; injunction sought over automation rollout.",
+      "date": "2026-06-02",
+      "status": "pending",
+      "severity": 0.2
+    }
+  ]
+}

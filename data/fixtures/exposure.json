@@ -1,0 +1,31 @@
+{
+  "_comment": "Synthetic exposure data — always synthetic; never real PII. Only the Exposure agent reads this, and only after the orchestrator escalates. The dark-web chatter references the conference, matching the tasking's event terms.",
+  "broker_listings": [
+    {
+      "source_id": "broker:peoplefinder",
+      "broker": "PeopleFinder",
+      "exposes": "home address, phone number",
+      "takedown_url": "https://peoplefinder.example/opt-out",
+      "severity": 0.5
+    }
+  ],
+  "breaches": [
+    {
+      "source_id": "breach:hibp-2024",
+      "identifier": "jordan.vale@vantagerobotics.com",
+      "breach": "ConferenceReg2024",
+      "year": 2024,
+      "leaked_fields": ["email", "hashed_password"],
+      "severity": 0.5
+    }
+  ],
+  "darkweb_chatter": [
+    {
+      "source_id": "darkweb:forum-x",
+      "forum": "forum-x",
+      "summary": "Post referencing the CEO's Berlin conference appearance and asking for the arrival schedule.",
+      "text": "anyone got the schedule for the vantage ceo at the berlin conference? want to know arrival time",
+      "severity": 0.75
+    }
+  ]
+}

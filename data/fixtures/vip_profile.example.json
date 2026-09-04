@@ -1,0 +1,21 @@
+{
+  "name": "Mark Zuckerberg",
+  "entity_id": "jordan_vale",
+  "role": "CEO, Meta",
+  "is_public_figure": true,
+  "relationships": [
+    { "name": "Priscilla Chan", "relation": "spouse", "protect": true },
+    { "name": "Maxima Zuckerberg", "relation": "child", "protect": true },
+    { "name": "Aurelia Zuckerberg", "relation": "child", "protect": true }
+  ],
+  "known_adversaries": ["TikTok"],
+  "preferences": {
+    "hotel_brands": ["Hyatt"]
+  },
+  "pii": {
+    "home_addresses": ["1200 Marina Blvd, San Francisco, CA"],
+    "phone_numbers": ["+1-415-555-0142"],
+    "emails": ["mzuckerberg@meta.com"],
+    "known_usernames": ["mzuck"]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_comment_not_a_source": "Long-term source-reliability memory (0-1). Unknown sources default to 0.6. reddit:r/rumors is scored low, so its finding gets down-weighted during Observe rather than resurfaced every run — the alert-fatigue argument for long-term memory. Edit these via analyst feedback (memory.ReliabilityMemory.set_score).",
+  "news:techwire": 0.75,
+  "news:citypaper": 0.7,
+  "news:sportsdaily": 0.6,
+  "reddit:r/robotics": 0.6,
+  "reddit:r/activism": 0.55,
+  "reddit:r/rumors": 0.2,
+  "reddit:r/50501": 0.2,
+  "reddit:r/antiai": 0.2,
+  "permit:berlin-ordnungsamt": 0.9,
+  "cad:berlin-police": 0.85,
+  "docket:sf-superior": 0.9,
+  "broker:peoplefinder": 0.8,
+  "breach:hibp-2024": 0.85,
+  "darkweb:forum-x": 0.5,
+  "osm": 0.95,
+  "geo-fixture": 0.9,
+  "forum:redwing": 0.7,
+  "incident:munich-2025": 0.85,
+  "social:handle-probe": 0.5
+}

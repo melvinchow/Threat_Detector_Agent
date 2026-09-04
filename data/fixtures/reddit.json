@@ -1,0 +1,37 @@
+{
+  "_comment": "Synthetic social posts. Used when source.social != real, or when Reddit creds are missing. The r/rumors post is from a source scored low in source_reliability.json, so it gets down-weighted during Observe.",
+  "posts": [
+    {
+      "source_id": "reddit:r/robotics",
+      "subreddit": "robotics",
+      "title": "Vantage Robotics CEO Jordan Vale keynoting the Berlin robotics conference",
+      "body": "Anyone else going? Vale from Vantage is the headline keynote. Lots of angry comments about the automation announcement.",
+      "names_target": true,
+      "mentions_event": "conference",
+      "severity": 0.3
+    },
+    {
+      "source_id": "reddit:r/activism",
+      "subreddit": "activism",
+      "title": "Open Sky Collective mobilizing for the Berlin conference",
+      "body": "Open Sky Collective is organizing a demonstration outside the Berlin conference venue. Bring signs.",
+      "names_target": false,
+      "mentions_event": "conference",
+      "severity": 0.45
+    },
+    {
+      "source_id": "reddit:r/rumors",
+      "subreddit": "rumors",
+      "title": "Heard Jordan Vale's whole schedule got leaked??",
+      "body": "unconfirmed but someone said the CEO's full Berlin itinerary is floating around. probably fake.",
+      "names_target": true,
+      "mentions_event": "conference",
+      "severity": 0.5
+    }
+  ],
+  "scope": {
+    "entity_id": "jordan_vale",
+    "city": "Berlin"
+  },
+  "_scope_comment": "These curated posts describe ONE scenario. A tool must not serve them for a different protectee or city \u2014 'CEO' matching any tasking is how Berlin material ended up in a Dublin briefing."
+}

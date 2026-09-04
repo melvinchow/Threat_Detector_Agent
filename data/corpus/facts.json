@@ -1,0 +1,70 @@
+{
+  "_comment": "Seed rows for the SQLite structured-facts store (store.py). These are the STRUCTURED facts that should NOT go in the vector index — dates and coordinates the metadata pre-filter queries directly. entity_id scopes each fact to the protectee it concerns; the last row (morgan_vale) is a decoy a jordan_vale query must exclude. Coordinates: Alexanderplatz 52.5219,13.4132; Messe Berlin 52.5049,13.2733.",
+  "facts": [
+    {
+      "fact_id": "permit-berlin-2026-08-29",
+      "fact_type": "permit",
+      "entity_id": "jordan_vale",
+      "source_id": "permit:berlin-ordnungsamt",
+      "summary": "Protest permit filed by Open Sky Collective at Alexanderplatz for the conference date.",
+      "city": "Berlin",
+      "lat": 52.5219,
+      "lon": 13.4132,
+      "event_date": "2026-08-29",
+      "severity": 0.45,
+      "reliability": 0.9
+    },
+    {
+      "fact_id": "incident-messe-2026-07-14",
+      "fact_type": "incident",
+      "entity_id": "jordan_vale",
+      "source_id": "cad:berlin-police",
+      "summary": "Two trespass incidents at a robotics trade show linked to Open Sky Collective.",
+      "city": "Berlin",
+      "lat": 52.5049,
+      "lon": 13.2733,
+      "event_date": "2026-07-14",
+      "severity": 0.4,
+      "reliability": 0.85
+    },
+    {
+      "fact_id": "docket-sf-2026-06-02",
+      "fact_type": "docket",
+      "entity_id": "jordan_vale",
+      "source_id": "docket:sf-superior",
+      "summary": "Warehouse Workers United v. Vantage Robotics; injunction sought over automation rollout.",
+      "city": "San Francisco",
+      "lat": 37.7749,
+      "lon": -122.4194,
+      "event_date": "2026-06-02",
+      "severity": 0.2,
+      "reliability": 0.9
+    },
+    {
+      "fact_id": "travel-berlin-2026-08-29",
+      "fact_type": "travel",
+      "entity_id": "jordan_vale",
+      "source_id": "itinerary:internal",
+      "summary": "Protectee arrival in Berlin for the conference keynote.",
+      "city": "Berlin",
+      "lat": 52.5200,
+      "lon": 13.4050,
+      "event_date": "2026-08-29",
+      "severity": 0.1,
+      "reliability": 0.95
+    },
+    {
+      "fact_id": "incident-wrong-vale-2026-05-01",
+      "fact_type": "incident",
+      "entity_id": "morgan_vale",
+      "source_id": "cad:elsewhere",
+      "summary": "Unrelated incident concerning a different executive, Morgan Vale (decoy for entity scoping).",
+      "city": "Chicago",
+      "lat": 41.8781,
+      "lon": -87.6298,
+      "event_date": "2026-05-01",
+      "severity": 0.3,
+      "reliability": 0.6
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "_comment": "Synthetic news about the fictional protectee. The third item is a same-name athlete with NO role context, included so the entity-resolution step has something to correctly drop.",
+  "articles": [
+    {
+      "source_id": "news:techwire",
+      "title": "Vantage Robotics faces backlash over factory automation plans",
+      "text": "Vantage Robotics and its CEO Jordan Vale drew criticism this week after announcing warehouse automation that unions say will cut jobs.",
+      "kind": "sentiment",
+      "sentiment": "negative",
+      "severity": 0.35
+    },
+    {
+      "source_id": "news:citypaper",
+      "title": "Open Sky Collective plans European tour of demonstrations",
+      "text": "The activist group Open Sky Collective announced a series of demonstrations across Europe targeting robotics and surveillance firms.",
+      "kind": "actor",
+      "sentiment": "negative",
+      "severity": 0.4
+    },
+    {
+      "source_id": "news:sportsdaily",
+      "title": "Jordan Vale wins regional marathon",
+      "text": "Local runner Jordan Vale, 24, took first place in the regional marathon on Sunday.",
+      "kind": "sentiment",
+      "sentiment": "neutral",
+      "severity": 0.1
+    }
+  ],
+  "scope": {
+    "entity_id": "jordan_vale",
+    "city": "Berlin"
+  },
+  "_scope_comment": "These curated posts describe ONE scenario. A tool must not serve them for a different protectee or city \u2014 'CEO' matching any tasking is how Berlin material ended up in a Dublin briefing."
+}

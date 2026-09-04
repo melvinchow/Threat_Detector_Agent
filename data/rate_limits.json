@@ -1,0 +1,9 @@
+{
+  "2026-09-03": {
+    "llm_calls": 38,
+    "nominatim": 11,
+    "reddit": 9,
+    "exa": 8,
+    "overpass": 3
+  }
+}
