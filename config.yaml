@@ -1,0 +1,128 @@
+# ThreatDetector configuration.
+#
+# `source` selects, per data source, whether a tool calls a real API or reads
+# synthetic fixtures. The agents never see this choice — the return schema is
+# identical either way (see src/threat_detector/schemas.py).
+
+source:
+  news: real               # Exa (exa.ai) news search; falls back to synthetic if EXA_API_KEY missing
+  social: real             # Reddit via PRAW; auto-falls back to synthetic if creds missing
+  public_records: synthetic  # no public API exists for court/CAD/permit data — stays fake by design
+  exposure: synthetic      # data brokers / breach / dark web — always synthetic in this repo
+  geospatial: real         # OpenStreetMap Nominatim + Overpass; no key required
+
+limits:
+  # STRICT per-day budgets for every real API, so the analyst can test many
+  # times a day without exhausting free tiers. When a budget runs out the tool
+  # falls back to synthetic fixtures — the run degrades honestly, never fails.
+  # Counters persist in data/rate_limits.json (gitignored).
+  reddit: 20
+  exa: 10
+  nominatim: 40
+  overpass: 8
+  osrm: 20
+  llm_calls: 300   # model calls/day in LLM mode (one assessment ≈ 15-25 calls)
+
+guardrails:
+  # Module 6. Intake gaps: major -> follow-up questions to the analyst,
+  # minor -> stated assumptions (see guardrails.intake_check).
+  stale_after_days: 180    # live findings older than this are down-weighted 50%
+  geo_max_km: 100          # a "proximate" hit farther than this is a data error
+
+llm:
+  # false -> deterministic mode: plain-Python loop, no model, no cost, fully
+  #          reproducible (the gradable baseline).
+  # true  -> LLM-DRIVEN mode: a real agent loop (agent_loop.py) — the model
+  #          decides which specialist to dispatch, reacts to what comes back,
+  #          and writes the assessment narrative. Tools, guardrails, and the
+  #          risk rubric stay deterministic (that's the Module 6 safety layer).
+  enabled: true
+
+  # Where tokens come from — pick ONE (check with: python -m threat_detector.cli llm-check):
+  #   ollama      -> local open-source model, free, offline.
+  #                  `brew install ollama && ollama pull qwen3:8b && ollama serve`
+  #                  models: qwen3:8b, llama3.2:3b, gemma3:4b, ...
+  #   huggingface -> local model via transformers (pip install -e ".[huggingface]")
+  #                  models: Qwen/Qwen2.5-3B-Instruct, ...
+  #   claude_cli  -> your ordinary Claude SUBSCRIPTION via the `claude` CLI
+  #                  (like ai-job-search). No API key; uses your plan's usage.
+  #                  models: claude-sonnet-5, claude-haiku-4-5
+  #   anthropic   -> Anthropic API with ANTHROPIC_API_KEY from .env (pay-per-token)
+  #                  models: claude-sonnet-5, claude-haiku-4-5
+  backend: claude_cli
+
+  # orchestrator = the strong model that runs the loop and writes the briefing;
+  # specialist = the cheap model that voices specialist commentary.
+  # (Old `anthropic/`- or `ollama/`-prefixed names still work — the prefix is
+  # stripped automatically.)
+  # ollama defaults: qwen3:8b reasons well enough to drive the loop; gemma3:4b
+  # is fast enough for per-wave commentary and routing. Claude examples:
+  # claude-sonnet-5 / claude-haiku-4-5 (backend: claude_cli or anthropic).
+  orchestrator_model: claude-sonnet-5
+  specialist_model: claude-haiku-4-5
+
+  max_steps: 6                 # hard cap on agent-loop tool calls per run
+  specialist_commentary: true  # persona comments per wave (extra cheap-model calls)
+
+  # Which framework drives collection:
+  #   native    -> agent_loop.py (default): this project's own Think/Act/
+  #                Observe/Adapt loop on the backend above.
+  #   langchain -> langchain_roster.py: LangChain + LangGraph choose the
+  #                dispatches, calling the SAME specialist tools and handing
+  #                off to the SAME deterministic scoring spine. Run it with
+  #                `python3 -m threat_detector.cli demo --harness langchain`.
+  #   claude    -> the Claude Agent SDK adapter (claude_harness.py).
+  harness: native
+  claude_orchestrator_model: claude-sonnet-5
+  claude_specialist_model: claude-haiku-4-5
+
+retrieval:
+  # RAG layer (Module 3). Runs fully offline by default: a local concept
+  # embedder stands in for a hosted embedding model, and a pure-Python vector
+  # index stands in for Chroma. Flip the backends to go real (see below).
+  enabled: true
+  embeddings: local        # local | voyage   (Voyage AI = Anthropic's embedding partner)
+  vector_store: local      # local | chroma
+  candidates: 20           # recall-first first pass: retrieve this many...
+  top_k: 6                 # ...then rerank down to this many that enter context
+  rrf_k: 60                # reciprocal-rank-fusion constant for hybrid merge
+  rerank_threshold: 0.12   # below this rerank score -> "no supporting evidence retrieved"
+  live_ttl_days: 90        # live-ingest chunks age out after this unless promoted
+  paths:
+    corpus: data/corpus/documents.json   # documents to index (live + case memory)
+    facts: data/corpus/facts.json        # seed rows for the SQLite facts store
+    facts_db: data/rag/facts.db          # built structured store (gitignored)
+
+planner:
+  # ToT beam-search protection planner (Module 4), nested inside Recommendation.
+  # Depth = trip_days x 3 requirement types (movement, stationary, monitoring).
+  beam_width: 3          # partial plans kept alive per level (3-5 keeps it honest)
+  max_candidates: 3      # generator proposes at most this many per slot
+  trip_days: 2
+  budget: 12000          # shared security budget for the whole trip (EUR, synthetic)
+  trigger_score: 0.45    # run the planner when overall risk >= this (ELEVATED+)
+  # Lodging catalog: 'synthetic' = vendors.json fixtures; 'osm' = REAL hotels
+  # near the tasking city via OpenStreetMap Overpass (names + distances real;
+  # prices and security attributes synthetic and labeled as such). Movement and
+  # monitoring vendors are always synthetic — no open API for security escorts.
+  lodging: osm
+
+coordination:
+  # Multi-agent loop limits (Module 5): every loop has a satisfaction condition
+  # AND a hard cap. The condition is the intended exit; the cap is the safety net.
+  max_collection_waves: 3     # collection stops at saturation (no new entities) or here
+  corroboration_rounds: 2     # assessment may send work back to collection this many times
+  corroboration_severity: 0.7 # claims at/above this severity need >1 independent source
+  uncorroborated_cap: 0.55    # severity ceiling if corroboration is never found
+
+orchestrator:
+  # Cap on dispatch waves, so the loop always terminates.
+  max_waves: 4
+  # A finding from a source at or below this reliability (0-1) is retained but
+  # down-weighted rather than acted on. See memory.py / source_reliability.json.
+  min_reliability: 0.35
+
+paths:
+  fixtures: data/fixtures
+  profile: data/vip_profile.json          # written by `cli profile`; gitignored
+  reliability: data/fixtures/source_reliability.json

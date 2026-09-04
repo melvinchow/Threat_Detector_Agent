@@ -1,0 +1,62 @@
+[project]
+name = "threat-detector"
+version = "0.1.0"
+description = "Multi-agent VIP threat assessment system (agentic AI capstone)."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Melvin Chow" }]
+dependencies = [
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+    "requests>=2.31",
+    # Real-source adapters (optional at runtime; imported lazily):
+    "praw>=7.7",              # Reddit API for the Open-Source Monitoring agent
+]
+# NOTE: the framework harness (LangChain) is an EXTRA, not a hard dependency.
+# CrewAI used to be declared here, and because every release from 0.14 on caps
+# at `python <3.14`, `pip install -e .` aborted outright on a 3.14 interpreter —
+# taking praw, and therefore live Reddit collection, down with it. A harness the
+# core loop does not need must never be able to break the core install.
+# NOTE: the RAG layer (embeddings, vector search, SQLite facts store) needs NO
+# extra dependencies in its default offline mode — it uses a local concept
+# embedder, a pure-Python index, and the stdlib `sqlite3`. The `real` extra below
+# is only for swapping in hosted backends.
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+]
+real = [
+    "voyageai>=0.2",         # real embeddings (retrieval.embeddings: voyage)
+    "chromadb>=0.5",         # real vector store (retrieval.vector_store: chroma)
+]
+langchain = [
+    "langchain>=1.0",        # LangChain/LangGraph harness (langchain_roster.py)
+    "langchain-core>=1.0",
+]
+claude = [
+    "claude-agent-sdk>=0.1", # Claude-native harness (llm.harness: claude)
+]
+gui = [
+    "gradio>=6.0",           # the analyst console (python app.py)
+]
+huggingface = [
+    "transformers>=4.44",    # llm.backend: huggingface (local models, no server)
+    "torch>=2.3",
+    "accelerate>=0.30",
+]
+
+[project.scripts]
+threat-detector = "threat_detector.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
